@@ -32,7 +32,8 @@ public class GetAppInfo {
                     packageNames.add(packName);
                     try {
                         ApplicationInfo info = packageManager.getApplicationInfo(packName, 0);
-                        Log.e("GetAPPInfo", "allPackage: ------------------------------------" + packName +"===================="+ info);
+                        CharSequence AppName=packageManager.getApplicationLabel(info);
+                        Log.e("GetAPPInfo", "allPackage: ------------------------------------" + packName +"===================="+ AppName);
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
                     }
