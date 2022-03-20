@@ -1,10 +1,14 @@
 package com.example.testforproject;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.testforproject.Db.MyDataBaseHelper;
 import com.example.testforproject.dataclass.Appinfo;
 import com.example.testforproject.dataclass.Fruit;
 import com.example.testforproject.dataclass.FruitAdapter;
@@ -25,6 +29,7 @@ import java.util.List;
 public class main_page extends AppCompatActivity {
 
     private ActivityMainPageBinding binding;
+    private MyDataBaseHelper BookDBHelper;
     private List<Fruit> fruitList=new ArrayList<Fruit>();
     private List<Appinfo> appinfoList=new ArrayList<Appinfo>();
     private String[] data ={"apple","banana","pear","peach","pineapple","apple","banana","pear","peach","pineapple","apple","banana","pear","peach","pineapple","apple","banana","pear","peach","pineapple"
@@ -36,6 +41,7 @@ public class main_page extends AppCompatActivity {
 
         binding = ActivityMainPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -49,6 +55,16 @@ public class main_page extends AppCompatActivity {
 
         initfruit();
         initapplist();
+        BookDBHelper=new MyDataBaseHelper(this,"Book.db",null,1);
+
+        Button DBbutton= (Button) findViewById(R.id.DataBase);
+        DBbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(main_page.this,"Click",Toast.LENGTH_SHORT).show();
+                BookDBHelper.getWritableDatabase();
+            }
+        });
 
         FruitAdapter adapter=new FruitAdapter(main_page.this,R.layout.fruit_item,fruitList);
         ListView listView=(ListView) findViewById(R.id.FruitList);
